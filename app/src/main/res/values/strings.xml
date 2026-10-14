@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Switch DNS</string>
+    <string name="tile_dns_name">Частный DNS</string>
+    <string name="tile_dns_off">DNS: Выкл</string>
+    <string name="tile_dns_auto">DNS: Авто</string>
+    <string name="tile_subtitle_off">Не используется</string>
+    <string name="tile_subtitle_auto">Системный</string>
+</resources>
