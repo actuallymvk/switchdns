@@ -35,6 +35,7 @@ import com.switchdns.ui.components.ModeSelectorCard
 import com.switchdns.ui.components.PermissionCard
 import com.switchdns.ui.components.QuickSettingsTileHint
 import com.switchdns.ui.components.ServerListCard
+import com.switchdns.ui.components.TileSettingsCard
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,7 +70,7 @@ fun MainScreen(
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "Частный DNS в один клик",
+                            text = "Частный DNS • v1.1.0",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -146,6 +147,12 @@ fun MainScreen(
                 }
             )
 
+            // Quick Settings Tile Configuration Card
+            TileSettingsCard(
+                includeAutoInCycle = includeAutoInCycle,
+                onToggleIncludeAuto = onToggleIncludeAuto
+            )
+
             // DNS Server List Card
             ServerListCard(
                 servers = servers,
@@ -178,10 +185,9 @@ fun MainScreen(
                 }
             )
 
-            // Quick Settings Tile Hint and settings
+            // Quick Settings Tile Hint
             QuickSettingsTileHint(
-                includeAutoInCycle = includeAutoInCycle,
-                onToggleIncludeAuto = onToggleIncludeAuto
+                includeAutoInCycle = includeAutoInCycle
             )
         }
     }
