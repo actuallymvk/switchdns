@@ -11,6 +11,7 @@ class DnsRepository(context: Context) {
         private const val PREFS_NAME = "dns_settings_prefs"
         private const val KEY_SERVERS = "saved_dns_servers"
         private const val KEY_LAST_SELECTED_SERVER_HOST = "last_selected_server_host"
+        private const val KEY_INCLUDE_AUTO_IN_CYCLE = "include_auto_in_cycle"
 
         @Volatile
         private var instance: DnsRepository? = null
@@ -104,5 +105,13 @@ class DnsRepository(context: Context) {
 
     fun setLastSelectedHost(host: String) {
         prefs.edit().putString(KEY_LAST_SELECTED_SERVER_HOST, host).apply()
+    }
+
+    fun isIncludeAutoInCycle(): Boolean {
+        return prefs.getBoolean(KEY_INCLUDE_AUTO_IN_CYCLE, true)
+    }
+
+    fun setIncludeAutoInCycle(include: Boolean) {
+        prefs.edit().putBoolean(KEY_INCLUDE_AUTO_IN_CYCLE, include).apply()
     }
 }

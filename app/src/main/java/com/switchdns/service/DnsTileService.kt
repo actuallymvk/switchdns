@@ -35,7 +35,8 @@ class DnsTileService : TileService() {
         }
 
         val servers = dnsRepository.getServers()
-        dnsSettingsManager.cycleNextMode(servers)
+        val includeAuto = dnsRepository.isIncludeAutoInCycle()
+        dnsSettingsManager.cycleNextMode(servers, includeAuto)
         updateTileUi()
     }
 

@@ -88,16 +88,28 @@ class DnsSettingsManager(private val context: Context) {
 
     /**
      * Cycles to the next DNS state:
-     * Off ("off") -> Auto ("opportunistic") -> Server 1 -> Server 2 -> ... -> Off
+     * If includeAuto == true:
+     *   Off ("off") -> Auto ("opportunistic") -> Server 1 -> Server 2 -> ... -> Off
+     * If includeAuto == false:
+     *   Off ("off") -> Server 1 -> Server 2 -> ... -> Off
      */
-    fun cycleNextMode(servers: List<DnsServer>): String {
+    fun cycleNextMode(servers: List<DnsServer>, includeAuto: Boolean = true): String {
         val currentMode = getMode()
         val currentSpecifier = getSpecifier()
 
         return when (currentMode) {
             DnsMode.OFF -> {
-                setMode(DnsMode.OPPORTUNISTIC)
-                DnsMode.OPPORTUNISTIC
+                if (includeAuto) {
+                    setMode(DnsMode.OPPORTUNISTIC)
+                    DnsMode.OPPORTUNISTIC
+                } else if (servers.isNotEmpty()) {
+                    val firstServer = servers.first()
+                    setMode(DnsMode.HOSTNAME, firstServer.host)
+                    DnsMode.HOSTNAME
+                } else {
+                    setMode(DnsMode.OFF)
+                    DnsMode.OFF
+                }
             }
             DnsMode.OPPORTUNISTIC -> {
                 if (servers.isNotEmpty()) {

@@ -45,12 +45,14 @@ fun MainScreen(
     currentMode: String,
     currentSpecifier: String,
     servers: List<DnsServer>,
+    includeAutoInCycle: Boolean,
     onRefresh: () -> Unit,
     onModeChange: (String) -> Unit,
     onServerSelected: (DnsServer) -> Unit,
     onAddServer: (name: String, host: String) -> Unit,
     onDeleteServer: (DnsServer) -> Unit,
-    onResetDefaults: () -> Unit
+    onResetDefaults: () -> Unit,
+    onToggleIncludeAuto: (Boolean) -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -176,8 +178,11 @@ fun MainScreen(
                 }
             )
 
-            // Quick Settings Tile Hint
-            QuickSettingsTileHint()
+            // Quick Settings Tile Hint and settings
+            QuickSettingsTileHint(
+                includeAutoInCycle = includeAutoInCycle,
+                onToggleIncludeAuto = onToggleIncludeAuto
+            )
         }
     }
 

@@ -26,6 +26,7 @@ class MainActivity : ComponentActivity() {
     private var currentMode by mutableStateOf(DnsMode.OPPORTUNISTIC)
     private var currentSpecifier by mutableStateOf("")
     private var servers by mutableStateOf<List<DnsServer>>(emptyList())
+    private var includeAutoInCycle by mutableStateOf(true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,7 @@ class MainActivity : ComponentActivity() {
                     currentMode = currentMode,
                     currentSpecifier = currentSpecifier,
                     servers = servers,
+                    includeAutoInCycle = includeAutoInCycle,
                     onRefresh = { refreshState() },
                     onModeChange = { mode ->
                         if (mode == DnsMode.HOSTNAME) {
@@ -79,6 +81,10 @@ class MainActivity : ComponentActivity() {
                         dnsRepository.resetToDefaults()
                         refreshState()
                         notifyTileUpdate()
+                    },
+                    onToggleIncludeAuto = { enabled ->
+                        dnsRepository.setIncludeAutoInCycle(enabled)
+                        refreshState()
                     }
                 )
             }
@@ -96,6 +102,7 @@ class MainActivity : ComponentActivity() {
         currentMode = dnsSettingsManager.getMode()
         currentSpecifier = dnsSettingsManager.getSpecifier()
         servers = dnsRepository.getServers()
+        includeAutoInCycle = dnsRepository.isIncludeAutoInCycle()
     }
 
     private fun notifyTileUpdate() {
