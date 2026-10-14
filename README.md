@@ -44,19 +44,22 @@ adb shell pm grant com.switchdns android.permission.WRITE_SECURE_SETTINGS
 
 ---
 
-## 🛠 Автоматическая сборка APK (GitHub Actions)
+## 📥 Скачивание готового APK
 
-В проекте настроен workflow `.github/workflows/build.yml`, который автоматически собирает `.apk` при каждом push в ветку `main` или `master`, а также доступен для ручного запуска (`workflow_dispatch`).
+Готовый установочный APK собирается автоматически через GitHub Actions при каждом обновлении:
+1. Откройте вкладку [**Actions**](../../actions) репозитория.
+2. Выберите последний успешный запуск **Build Debug APK**.
+3. Внизу страницы в секции **Artifacts** скачайте архив `dns-toggle-debug-apk` (внутри находится готовый `.apk`).
 
-### Как запустить и получить APK:
-1. Запушьте проект на GitHub:
-   ```bash
-   git remote add origin https://github.com/<ваш_логин>/<имя_репозитория>.git
-   git branch -M main
-   git push -u origin main
-   ```
-2. Перейдите во вкладку **Actions** в репозитории на GitHub.
-3. После завершения шага **Build Debug APK** скачайте готовый файл из секции **Artifacts** (`dns-toggle-debug-apk`).
+---
+
+## 🛠 Локальная сборка
+
+```bash
+# Сборка debug APK через терминал
+./gradlew assembleDebug
+```
+Готовый файл появится по пути: `app/build/outputs/apk/debug/app-debug.apk`
 
 ---
 
